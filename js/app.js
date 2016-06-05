@@ -1,8 +1,8 @@
 // Tasks:
-// playNote as reusable function
-// -. when note is played play sounds
-// -. sound when loosing
-// -. sound when correct seq
+    // playNote as reusable function
+    // -. when note is played play sounds
+    // -. sound when loosing
+    // -. sound when correct seq
 // Score
 // BONUS:
 // support mute 
@@ -15,18 +15,26 @@
 
 'use strict';
 var NOTES;
-
+//The Score of the user
+var gScore = 0;
 // This is my State:
 var gState = {
     isUserTurn : false,
     seqNoteIndexes: [],
     currNoteIndexToClick: 0,
-    level: 1
+    level: 1,
+    score:0
 }
+//3 must vars for mute() to work - by this point .  
+    //1.// this var is responsable to check if mute btn is on 
+var gIsBtnMuteOn = false;
+    //2.//
+var gAudio;
+    //3.//this var is responsable to check if the mute is on or off by getting odd number or not 
+var gBtnClickCounter = 1;
 
 // we created a 3 sound array!
 var gSounds = ['sound/pianoKey1.mp3', 'sound/pianoKey2.mp3', 'sound/pianoKey3.mp3'];
-
 
 // guidelines:
 // add function playNote() --> reuseable function 
@@ -37,12 +45,35 @@ var gSounds = ['sound/pianoKey1.mp3', 'sound/pianoKey2.mp3', 'sound/pianoKey3.mp
 
 function playNote(addedNoteSound) {
     // console.log('elNote: ', elNote);
-    var audio = new Audio(addedNoteSound);
-    console.log('addedNoteSound: ', addedNoteSound);
+    //checking if the mute btn is off --> play note sound 
+    if (!gIsBtnMuteOn) {
+        console.log('gBtnClickCounter: ',gBtnClickCounter);
+        console.log('Mute btn is on :', gIsBtnMuteOn);
 
-    audio.play();
-
+        var gAudio = new Audio(addedNoteSound);
+        console.log('addedNoteSound: ', addedNoteSound);
+        gAudio.play();
+    //checking if the mute btn is on --> Do NOT play note sound! 
+    }if (gIsBtnMuteOn) {
+         console.log('gBtnClickCounter: ',gBtnClickCounter);
+         console.log('Mute btn is on :', gIsBtnMuteOn);
+    }
+        
 }  
+
+function mute() {
+    gBtnClickCounter++;
+    if(gBtnClickCounter % 2 === 0) {
+         gIsBtnMuteOn = true;
+         var elBtnMute = document.querySelector('#btnMute');
+         elBtnMute.style.background = 'red';
+         gAudio = null;
+    }else {
+         gIsBtnMuteOn = false;
+         var elBtnMute = document.querySelector('#btnMute');
+         elBtnMute.style.background = 'white';
+    }
+}
 
 function init() {
     // upgrades this createNotesModel to work with every size of sounds array.
@@ -71,6 +102,9 @@ function renderNotes(notes) {
     var strHtmls = notes.map(function(note, i){
         var strHtml =  '<div class="note" onclick="noteClicked(this)" data-note="'+i+'"' + 
                              'style="background:'+ note.color +'"></div>';
+                             'style="background:'+ note.color +'">'
+                               + note.sound +
+                        '</div>';
         return strHtml;
     });
     
@@ -86,7 +120,6 @@ function addRandomNote() {
 }
 
 function playSeq() {
-    
     var elNotes = document.querySelectorAll('.note');
     // console.log('elNotes: ', elNotes);
     
@@ -156,7 +189,6 @@ function playSeq() {
 }
 
 function noteClicked(elNote) {
-    
     if (!gState.isUserTurn) return;
     var noteIndex = +elNote.getAttribute('data-note');
     console.log('noteIndex is: ', noteIndex);
@@ -169,23 +201,18 @@ function noteClicked(elNote) {
     
     console.log("elNote.getAttribute('data-note'): ", elNote.getAttribute('data-note'));
     
-  
-   
-   
-   
-    
     // User clicked the right note
     if (noteIndex === gState.seqNoteIndexes[gState.currNoteIndexToClick]) {
         // Clicked el sound (user side)
         console.log('elNote.innerText: ', elNote.innerText);
         // plays the clicked el sound:
         playNote(elNote.innerText);
-        
         console.log('User OK!');
         gState.currNoteIndexToClick++;
         
         // added delay between user click --> to changing to computer turn and next sequence initialiizing.
         if (gState.currNoteIndexToClick === gState.seqNoteIndexes.length) {
+        updateScore();
             setTimeout(function(){
                 computerTurn();
             }, 1500);
@@ -232,4 +259,14 @@ function computerTurn() {
 }
 
 
+
 var gElComputerDataNote;
+
+function updateScore() {
+    //The element of the span -Score that is rendering from gScore
+    var elScore = document.querySelector('.scoreSpan');
+    gState.score++;
+    elScore.innerText= gState.score;
+}
+
+
