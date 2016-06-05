@@ -10,6 +10,8 @@
 // keep max score in localStorage
 // levels
  
+ 
+ //Merging works?
 
 'use strict';
 var NOTES;
@@ -68,11 +70,11 @@ function renderNotes(notes) {
     // mapping notes to html tags
     var strHtmls = notes.map(function(note, i){
         var strHtml =  '<div class="note" onclick="noteClicked(this)" data-note="'+i+'"' + 
-                             'style="background:'+ note.color +'">' + 
-                            note.sound + 
-                        '</div>';
+                             'style="background:'+ note.color +'"></div>';
         return strHtml;
     });
+    
+    
     
     
     var elPiano = document.querySelector('.piano');
@@ -86,17 +88,59 @@ function addRandomNote() {
 function playSeq() {
     
     var elNotes = document.querySelectorAll('.note');
+    // console.log('elNotes: ', elNotes);
     
     gState.seqNoteIndexes.forEach(function (seqNoteIndex, i) {
         
         setTimeout(function playNotes() {
             elNotes[seqNoteIndex].classList.add('playing');
             
+            
+            
+            
             setTimeout(function donePlayingNote() {
                 elNotes[seqNoteIndex].classList.remove('playing');
             }, 500);
             
-            console.log('Playing: ', NOTES[seqNoteIndex].sound);
+            // console.log('elNotes[seqNoteIndex]: ', elNotes[seqNoteIndex]);
+            // console.log('Playing: ', NOTES[seqNoteIndex].sound);
+            
+            // // when computer picks mark up the klid for 0.7 sec and remove
+            gElComputerDataNote = +elNotes[seqNoteIndex].getAttribute('data-note');
+            console.log('elDataNote: ', gElComputerDataNote);
+            
+            
+            
+            // can be changed to switch in the future.
+            // 3 types of klid souns if computer clicks the clid
+            // paint them in green border.
+            if (gElComputerDataNote === 0) {
+                var elKlid1 = document.querySelector('.note1');
+                // console.log('elKlid1: ', elKlid1);
+                elKlid1.style.border = "5px solid lightgreen";
+                setTimeout(function () {
+                    elKlid1.style.border = "";
+                }, 700);
+            }
+            if (gElComputerDataNote === 1) {
+                var elKlid2 = document.querySelector('.note2');
+                // console.log('elKlid2: ', elKlid2);
+                elKlid2.style.border = "5px solid lightgreen";
+                setTimeout(function () {
+                    elKlid2.style.border = "";
+                }, 700);
+
+            }
+            if (gElComputerDataNote === 2) {
+                var elKlid3 = document.querySelector('.note3');
+                // console.log('elKlid3: ', elKlid3);
+                elKlid3.style.border = "5px solid lightgreen";
+                setTimeout(function () {
+                    elKlid3.style.border = "";
+                }, 700);
+            }
+            
+            
             
             // everytime a random key is picked -->(seqNoteIndex) is random key --> play it's sound(NOTES[seqNoteIndex].sound) --> (computer side) 
             playNote(NOTES[seqNoteIndex].sound);
@@ -117,6 +161,18 @@ function noteClicked(elNote) {
     var noteIndex = +elNote.getAttribute('data-note');
     console.log('noteIndex is: ', noteIndex);
     
+    // add a GREEN border to clicked key --> and remove after 0.7 secs
+    elNote.style.border = "5px solid lightgreen";
+    setTimeout(function(){
+     elNote.style.border = "";
+    }, 700);
+    
+    console.log("elNote.getAttribute('data-note'): ", elNote.getAttribute('data-note'));
+    
+  
+   
+   
+   
     
     // User clicked the right note
     if (noteIndex === gState.seqNoteIndexes[gState.currNoteIndexToClick]) {
@@ -137,10 +193,28 @@ function noteClicked(elNote) {
         
         
     } else {
+        // user clicked wrong klid
         console.log('User Wrong!');
         var elPiano = document.querySelector('.piano');
         elPiano.style.display = 'none';
         playNote(elNote.innerText);
+        
+        
+        // add a RED border to clicked key --> and remove after 0.7 secs
+        var elClickedDataNote = +elNote.getAttribute('data-note');
+        console.log('gElComputerDataNote: ', gElComputerDataNote);
+        console.log('elClickedDateNote: ', elClickedDataNote);
+        
+        // within this else --> the player picked the wrong note.
+        // color it red --> remove after 0.7 sec
+        elNote.style.border = "5px solid red";
+        setTimeout(function () {
+            elNote.style.border = "";
+        }, 700);
+        // freeze game.
+        alert('Game Over');
+
+        
         
     }
     console.log('Note', NOTES[noteIndex]);
@@ -154,6 +228,8 @@ function computerTurn() {
      //alert('User Turn is Over');
      addRandomNote();
      playSeq();
+     
 }
 
 
+var gElComputerDataNote;

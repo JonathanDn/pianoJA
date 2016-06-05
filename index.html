@@ -6,15 +6,21 @@
   <link rel="stylesheet" href="css/app.css">
 </head>
 <body onload="init()">
-  <h1>Saimons Piano</h1>
+  <h1><center>Simon's Piano</center></h1> 
   
   <div class="piano"></div>
   
  
-  <!--<button id="btnRestart" onclick="restart()"  >Restart</button>-->
-  
+<!--<button id="btnRestart" onclick="restart()"  >Restart</button>-->
 
-  
+
+<!--piano-->
+<div id="p-wrapper">
+	<ul id="piano">
+		<li><div class="note1 note anchor" onclick="noteClicked(this)" data-note="0">sound/pianoKey1.mp3</div></li>
+		<li><div class="note2 note anchor" onclick="noteClicked(this)" data-note="1">sound/pianoKey2.mp3</div><span></span></li>
+		<li><div class="note3 note anchor" onclick="noteClicked(this)" data-note="2">sound/pianoKey3.mp3</div><span></span></li>
+</div>
   
  <script src="js/general.js"></script> 
  <script src="js/app.js"></script> 
