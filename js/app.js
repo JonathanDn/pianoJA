@@ -1,8 +1,8 @@
 // Tasks:
-// playNote as reusable function
-// -. when note is played play sounds
-// -. sound when loosing
-// -. sound when correct seq
+    // playNote as reusable function
+    // -. when note is played play sounds
+    // -. sound when loosing
+    // -. sound when correct seq
 // Score
 // BONUS:
 // support mute 
@@ -13,17 +13,20 @@
 
 'use strict';
 var NOTES;
-
+//The Score of the user
+var gScore = 0;
 // This is my State:
 var gState = {
     isUserTurn : false,
     seqNoteIndexes: [],
     currNoteIndexToClick: 0,
-    level: 1
+    level: 1,
+    score:0
 }
 
 // we created a 3 sound array!
 var gSounds = ['sound/pianoKey1.mp3', 'sound/pianoKey2.mp3', 'sound/pianoKey3.mp3'];
+var gSounds = [{path :'sound/pianoKey1.mp3'}, {path :'sound/pianoKey2.mp3'}, {path :'sound/pianoKey3.mp3'}];
 
 
 // guidelines:
@@ -112,24 +115,21 @@ function playSeq() {
 }
 
 function noteClicked(elNote) {
-    
     if (!gState.isUserTurn) return;
     var noteIndex = +elNote.getAttribute('data-note');
     console.log('noteIndex is: ', noteIndex);
-    
-    
     // User clicked the right note
     if (noteIndex === gState.seqNoteIndexes[gState.currNoteIndexToClick]) {
         // Clicked el sound (user side)
         console.log('elNote.innerText: ', elNote.innerText);
         // plays the clicked el sound:
         playNote(elNote.innerText);
-        
         console.log('User OK!');
         gState.currNoteIndexToClick++;
         
         // added delay between user click --> to changing to computer turn and next sequence initialiizing.
         if (gState.currNoteIndexToClick === gState.seqNoteIndexes.length) {
+        updateScore()
             setTimeout(function(){
                 computerTurn();
             }, 1500);
@@ -156,4 +156,27 @@ function computerTurn() {
      playSeq();
 }
 
+function updateScore() {
+    //The element of the span -Score that is rendering from gScore
+    var elScore = document.querySelector('.scoreSpan');
+    gState.score++;
+    elScore.innerText= gState.score;
+    
+}
+
+function muteSound() {
+    // document.('background_audio').muted = true;
+    // var audio = elNote.getAttribute('addedNoteSound');
+    debugger;
+    // var audio = document.querySelector('.addedNoteSound');
+    // var audio = document.querySelector('.playing');
+    // audio.muted = true;
+    // console.log('audio: ',audio);
+    gSounds.forEach(function(note) {
+        console.log('note:',note);
+        
+        note.muted = true;
+    });
+    
+}
 
