@@ -17,3 +17,6 @@
 .playing {
   outline: 1px solid gray;
 }
+clicked {
+  background: red;
+}

@@ -23,6 +23,13 @@ var gState = {
     level: 1,
     score:0
 }
+//3 must vars for mute() to work - by this point .  
+    //1.// this var is responsable to check if mute btn is on 
+var gIsBtnMuteOn = false;
+    //2.//
+var gAudio;
+    //3.//this var is responsable to check if the mute is on or off by getting odd number or not 
+var gBtnClickCounter = 1;
 
 // we created a 3 sound array!
 var gSounds = ['sound/pianoKey1.mp3', 'sound/pianoKey2.mp3', 'sound/pianoKey3.mp3'];
@@ -36,12 +43,35 @@ var gSounds = ['sound/pianoKey1.mp3', 'sound/pianoKey2.mp3', 'sound/pianoKey3.mp
 
 function playNote(addedNoteSound) {
     // console.log('elNote: ', elNote);
-    var audio = new Audio(addedNoteSound);
-    console.log('addedNoteSound: ', addedNoteSound);
+    //checking if the mute btn is off --> play note sound 
+    if (!gIsBtnMuteOn) {
+        console.log('gBtnClickCounter: ',gBtnClickCounter);
+        console.log('Mute btn is on :', gIsBtnMuteOn);
 
-    audio.play();
-
+        var gAudio = new Audio(addedNoteSound);
+        console.log('addedNoteSound: ', addedNoteSound);
+        gAudio.play();
+    //checking if the mute btn is on --> Do NOT play note sound! 
+    }if (gIsBtnMuteOn) {
+         console.log('gBtnClickCounter: ',gBtnClickCounter);
+         console.log('Mute btn is on :', gIsBtnMuteOn);
+    }
+        
 }  
+
+function mute() {
+    gBtnClickCounter++;
+    if(gBtnClickCounter % 2 === 0) {
+         gIsBtnMuteOn = true;
+         var elBtnMute = document.querySelector('#btnMute');
+         elBtnMute.style.background = 'red';
+         gAudio = null;
+    }else {
+         gIsBtnMuteOn = false;
+         var elBtnMute = document.querySelector('#btnMute');
+         elBtnMute.style.background = 'white';
+    }
+}
 
 function init() {
     // upgrades this createNotesModel to work with every size of sounds array.
@@ -159,24 +189,4 @@ function updateScore() {
     var elScore = document.querySelector('.scoreSpan');
     gState.score++;
     elScore.innerText= gState.score;
-    
-}
-
-function muteSound() {
-    debugger;
-    // console.log('im here');
-    
-    var notes = document.querySelectorAll('.note');
-    console.log('note : ',notes);
-    notes.forEach(function(element) {
-    
-        element.innerText = ' ';
-    
-        // element.sound.muted = true;
-    }, this);
-    // note.innerText = ' ';
-    console.log('note : ',notes);
-    // console.log('s : ',s);
-    
-    
 }
