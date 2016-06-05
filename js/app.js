@@ -10,7 +10,7 @@
 // keep max score in localStorage
 // levels
  
-//hey
+
 'use strict';
 var NOTES;
 //The Score of the user
@@ -26,8 +26,6 @@ var gState = {
 
 // we created a 3 sound array!
 var gSounds = ['sound/pianoKey1.mp3', 'sound/pianoKey2.mp3', 'sound/pianoKey3.mp3'];
-var gSounds = [{path :'sound/pianoKey1.mp3'}, {path :'sound/pianoKey2.mp3'}, {path :'sound/pianoKey3.mp3'}];
-
 
 // guidelines:
 // add function playNote() --> reuseable function 
@@ -71,8 +69,9 @@ function renderNotes(notes) {
     // mapping notes to html tags
     var strHtmls = notes.map(function(note, i){
         var strHtml =  '<div class="note" onclick="noteClicked(this)" data-note="'+i+'"' + 
-                             'style="background:'+ note.color +'">' + 
-                            note.sound + 
+                             'style="background:'+ note.color +'">'
+                            //   +'<audio src="'+ note.sound +'"></audio>' 
+                               + note.sound +
                         '</div>';
         return strHtml;
     });
@@ -87,7 +86,6 @@ function addRandomNote() {
 }
 
 function playSeq() {
-    
     var elNotes = document.querySelectorAll('.note');
     
     gState.seqNoteIndexes.forEach(function (seqNoteIndex, i) {
@@ -165,18 +163,20 @@ function updateScore() {
 }
 
 function muteSound() {
-    // document.('background_audio').muted = true;
-    // var audio = elNote.getAttribute('addedNoteSound');
     debugger;
-    // var audio = document.querySelector('.addedNoteSound');
-    // var audio = document.querySelector('.playing');
-    // audio.muted = true;
-    // console.log('audio: ',audio);
-    gSounds.forEach(function(note) {
-        console.log('note:',note);
-        
-        note.muted = true;
-    });
+    // console.log('im here');
+    
+    var notes = document.querySelectorAll('.note');
+    console.log('note : ',notes);
+    notes.forEach(function(element) {
+    
+        element.innerText = ' ';
+    
+        // element.sound.muted = true;
+    }, this);
+    // note.innerText = ' ';
+    console.log('note : ',notes);
+    // console.log('s : ',s);
+    
     
 }
-
