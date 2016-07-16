@@ -1,5 +1,21 @@
 'use strict';
 
+var gState = {
+    isUserTurn : false,
+    seqNoteIndexes: [],
+    currNoteIndexToClick: 0,
+    level: 1,
+    score:0
+}
+var gSounds = ['sound/pianoKey1.mp3', 'sound/pianoKey2.mp3', 'sound/pianoKey3.mp3'];
+var gElComputerDataNote;
+var gScore = 0;
+var gIsBtnMuteOn = false;
+var gAudio;
+var gBtnClickCounter = 1;
+
+var NOTES;
+
 function playNote(addedNoteSound) {
         if (!gIsBtnMuteOn) {
             var gAudio = new Audio(addedNoteSound);
@@ -145,20 +161,3 @@ function updateScore() {
     gState.score++;
     elScore.innerText= gState.score;
 }
-
-var gState = {
-    isUserTurn : false,
-    seqNoteIndexes: [],
-    currNoteIndexToClick: 0,
-    level: 1,
-    score:0
-}
-
-var gSounds = ['sound/pianoKey1.mp3', 'sound/pianoKey2.mp3', 'sound/pianoKey3.mp3'];
-var gElComputerDataNote;
-var gScore = 0;
-var gIsBtnMuteOn = false;
-var gAudio;
-var gBtnClickCounter = 1;
-
-var NOTES;
