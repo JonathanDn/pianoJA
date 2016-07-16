@@ -1,27 +1,15 @@
 function printMat(mat, selector) {
-  
   var elContainer = document.querySelector(selector);
- 
   var strHTML = '<table border="1"><tbody>';
   mat.forEach(function (row, i) {
-    strHTML += '<tr>';
-
+    strHTML +=    '<tr>';
     row.forEach(function (cell, j) {
-      
       var className = 'cell cell' + i + '-' + j;
-      
-      strHTML += '<td class="' + className +   '"> ' + cell +  ' </td>'
+      strHTML +=      '<td class="' + className +   '"> ' + cell +  ' </td>'
     });    
-    
-    strHTML += '</tr>'
-    
-    
-    
+    strHTML +=    '</tr>'
   })
-  strHTML += '</tbody></table>';
-  
-  // console.log('strHTML', strHTML);
-  
+  strHTML +='</tbody></table>';
   elContainer.innerHTML = strHTML;
 }
 
@@ -34,8 +22,6 @@ function getRandomColor() {
     return color;
 }
 
-// Returns a random integer between min (included) and max (included)
-// Using Math.round() will give you a non-uniform distribution!
 function getRandomIntInclusive(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -47,7 +33,3 @@ function getFromStorage(key) {
   var str = localStorage.getItem(key);
   return JSON.parse(str);
 } 
-
-
-
-// test1

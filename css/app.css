@@ -12,7 +12,6 @@
   text-indent: -9999px;
 }
 
-/*piano css*/
 * {
   margin:0px;
   padding:0px;
@@ -42,17 +41,20 @@ a:hover {
   text-decoration:underline;
 }
 
-
+/*these two are the glowing signals of a played key*/
 .glowing-border {
   border: 7 px soid green;
   border-radius: 7px;
 }
-
 .glowing-border:focus{
   outline: none;
   border-color: lightgreen;
   box-shadow: 0 0 10px lightgreen;
   
+}
+
+.playing {
+  outline: 1px solid gray;
 }
 
 /* Piano Wrapper */
@@ -65,10 +67,9 @@ a:hover {
   background:linear-gradient(-60deg,#000,#333,#000,#666,#333 70%);
   width:130px;
   position:relative;
-  
   /*piano location*/
   top: 10px;
-  left:500px;
+  left:45%;
   -webkit-box-shadow:0 2px 0px #666,0 3px 0px #555,0 4px 0px #444,0 6px 6px #000,inset 0 -1px 1px rgba(255,255,255,0.5),inset 0 -4px 5px #000;
   -moz-box-shadow:0 2px 0px #666,0 3px 0px #555,0 4px 0px #444,0 6px 6px #000,inset 0 -1px 1px rgba(255,255,255,0.5),inset 0 -4px 5px #000;
   box-shadow:0 2px 0px #666,0 3px 0px #555,0 4px 0px #444,0 6px 6px #000,inset 0 -1px 1px rgba(255,255,255,0.5),inset 0 -4px 5px #000;
@@ -285,7 +286,6 @@ ul#piano li li a:hover {
   clear:both;
 }
 
-
 /* Animation */
 @-webkit-keyframes taufik {
   from {opacity:0;}
@@ -296,8 +296,5 @@ ul#piano li li a:hover {
   to {opacity:1;}
 }
 
-.playing {
-  outline: 1px solid gray;
-}
 
 

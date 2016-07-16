@@ -4,26 +4,31 @@
   <meta charset="UTF-8">
   <title>Saimons Piano</title>
   <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="bootstrapLib/css/bootstrap.min.css">
 </head>
 <body onload="init()">
-  <h1><center>Simon's Piano</center></h1> 
-  
+
+  <h1 class="text-center">Simon's Piano</h1> 
+  <h2 class="text-center">Score: <span class="scoreSpan">0</span></h2>
   <div class="piano"></div>
-  <div class="score">Score: <span class="scoreSpan">0</span></div>
-  <button id="btnMute" onclick="mute()">Mute</button>
- 
-<!--<button id="btnRestart" onclick="restart()"  >Restart</button>-->
-
-
-<!--piano-->
-<div id="p-wrapper">
-	<ul id="piano">
-		<li><div class="note1 note anchor" onclick="noteClicked(this)" data-note="0">sound/pianoKey1.mp3</div></li>
-		<li><div class="note2 note anchor" onclick="noteClicked(this)" data-note="1">sound/pianoKey2.mp3</div><span></span></li>
-		<li><div class="note3 note anchor" onclick="noteClicked(this)" data-note="2">sound/pianoKey3.mp3</div><span></span></li>
-</div>
   
- <script src="js/general.js"></script> 
- <script src="js/app.js"></script> 
+<!--piano-->
+  <div id="p-wrapper">
+    <ul id="piano">
+      <li><div class="note1 note anchor" onclick="noteClicked(this)" data-note="0">sound/pianoKey1.mp3</div></li>
+      <li><div class="note2 note anchor" onclick="noteClicked(this)" data-note="1">sound/pianoKey2.mp3</div><span></span></li>
+      <li><div class="note3 note anchor" onclick="noteClicked(this)" data-note="2">sound/pianoKey3.mp3</div><span></span></li>
+  </div>
+  
+  <br><br>
+  
+  <!--mute button also with glyphicon of mute button-->
+  <button type="button" class="btn btn-danger center-block" id="btnMute" onclick="mute()"><span class="muteSpan glyphicon glyphicon-volume-up"></span></button>
+  
+ <script src= "js/general.js"></script> 
+ <script src= "js/app.js"></script> 
+ <script src = "js/jquery-1.12.4.min.js"></script>
+ 
+ <script src="bootstrapLib/js/bootstrap.min.js"></script>
 </body>
 </html>
